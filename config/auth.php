@@ -106,4 +106,13 @@ return [
         ],
     ],
 
+    'oauth_credentials' =>[
+
+       'password_grant_client' =>[
+         'id' => env('OAUTH_PASSWORD_GRANT_CLIENT_ID'),
+         'secret' => env('OAUTH_PASSWORD_GRANT_CLIENT_SECRET')
+       ]
+
+    ]
+
 ];
