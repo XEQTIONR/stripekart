@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+//omit the array when adding admin
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
