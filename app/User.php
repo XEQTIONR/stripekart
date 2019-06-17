@@ -6,7 +6,7 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use App\Notifications\UserPasswordResetNotification;
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
@@ -37,4 +37,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sendPasswordResetNotification($token)
+    {
+      $this->notify(new UserPasswordResetNotification($token));
+    }
 }

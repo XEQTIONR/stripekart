@@ -22,12 +22,14 @@ class UserAuthenticationController extends Controller
     public function register(Request $request)
     {
 
+      //VALIDATE
       $validate = $request->validate([
         'email' => 'required',
         'name' => 'required',
         'password' => 'required'
       ]);
 
+      //CREATE USER
       $user = new User();
 
       $user->name = $request->name;
@@ -35,7 +37,7 @@ class UserAuthenticationController extends Controller
       $user->password = bcrypt($request->password);
       $user->save();
 
-
+      //LOG IN USER
       $req = Request::create(route('passport.token'), 'POST', [
 
           'grant_type' => 'password',
@@ -68,14 +70,35 @@ class UserAuthenticationController extends Controller
 
     }
 
-    public function login()
+    public function login(Request $request)
     {
+      //VALIDATE
+      $validate = $request->validate([
+        'username' => 'required',
+        'password' => 'required'
+      ]);
+
+      $req = Request::create(route('passport.token'), 'POST', [
+
+        'grant_type' => 'password',
+        'client_id' => config('auth.oauth_credentials.password_grant_client.id'),
+        'client_secret' => config('auth.oauth_credentials.password_grant_client.secret'),
+        'username' => $request->username,
+        'password' => $request->password,
+        'scope' => ''
+      ]);
+
+      $response = app()->handle($req);
+
+      return $response;
 
     }
 
     public function logout()
     {
-
+      auth()->user()->tokens->each(function($token, $key){
+        $token->delete();
+      });
     }
 
 }
