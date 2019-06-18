@@ -1,11 +1,11 @@
 // Add your native dependencies here:
 
 android {
-  defaultConfig {  
+  defaultConfig {
     generatedDensities = []
-    applicationId = "org.nativescript.application"
+    applicationId = "com.stripekart.app"
   }
-  aaptOptions {  
-    additionalParameters "--no-version-vectors"  
-  }  
+  aaptOptions {
+    additionalParameters "--no-version-vectors"
+  }
 }
