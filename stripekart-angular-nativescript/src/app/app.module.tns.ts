@@ -14,6 +14,14 @@ firebase
     .then(() => console.log('Firebase initiazed. YAY!'))
     .catch(err => console.error(`Error ${err}`));
 
+
+firebase.addOnDynamicLinkReceivedCallback(
+    function (url) {
+        // ..
+        console.log("URL IS:" + url);
+    }
+    );
+
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from 'nativescript-angular/forms';
 
