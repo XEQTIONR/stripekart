@@ -1,7 +1,7 @@
 {
   "name": "stripekart-angular-nativescript",
   "nativescript": {
-    "id": "org.nativescript.stripekartangularnativescript",
+    "id": "com.stripekart.app",
     "tns-android": {
       "version": "5.4.0"
     }
