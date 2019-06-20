@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "263708595849",
+    "firebase_url": "https://stripekart.firebaseio.com",
+    "project_id": "stripekart",
+    "storage_bucket": "stripekart.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263708595849:android:adc54b59ce7581b8",
+        "android_client_info": {
+          "package_name": "com.stripekart.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "263708595849-r1qbrgmlbhnbv3e68nbv4t9kkbpcirrb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8atowmCxy9x8zwfyIr4DyTLIiXTCmbVY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "263708595849-r1qbrgmlbhnbv3e68nbv4t9kkbpcirrb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "263708595849-4lqc5iu8621evhdg6q3d1ics024b2aji.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.stripekart.app",
+                "app_store_id": "962194608"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

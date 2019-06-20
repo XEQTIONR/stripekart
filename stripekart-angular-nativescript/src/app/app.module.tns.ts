@@ -1,10 +1,18 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 
+// import firebase = require('nativescript-plugin-firebase');
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
+const firebase = require("nativescript-plugin-firebase");
+
+firebase
+    .init()
+    .then(() => console.log('Firebase initiazed. YAY!'))
+    .catch(err => console.error(`Error ${err}`));
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from 'nativescript-angular/forms';
