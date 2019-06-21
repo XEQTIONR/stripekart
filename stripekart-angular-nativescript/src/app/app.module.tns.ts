@@ -6,6 +6,8 @@ import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { LogInComponent } from './log-in/log-in.component';
 
 const firebase = require("nativescript-plugin-firebase");
 
@@ -18,7 +20,8 @@ firebase
 firebase.addOnDynamicLinkReceivedCallback(
     function (url) {
         // ..
-        console.log("URL IS:" + url);
+
+        console.log("URL IS:" + JSON.stringify(url));
     }
     );
 
@@ -32,6 +35,8 @@ firebase.addOnDynamicLinkReceivedCallback(
   declarations: [
     AppComponent,
     HomeComponent,
+    ResetPasswordComponent,
+    LogInComponent,
   ],
   imports: [
     NativeScriptModule,
