@@ -8,16 +8,20 @@ export type Action = LActions.All;
 
 const initialState : LoginState = {
 
-    //id : null,
-    //email : null,
+    id : null,
+    email : null,
+    name : null,
     access_token : null,
-    refresh_token : null
+    refresh_token : null,
 }
 export function loginReducer(state : LoginState = initialState, action : Action)
 {
     switch (action.type)
     {
         case LActions.LOGIN_SUCCESS :
-            return { access_token : action.payload.access_token, refresh_token : action.payload.refresh_token}
+            return Object.assign({}, state, { access_token : action.payload.access_token, refresh_token : action.payload.refresh_token});
+
+        case LActions.LOGIN_FAILED :
+                return initialState;
      }
 }

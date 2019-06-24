@@ -56,6 +56,8 @@ export class LogInComponent implements OnInit {
                     error => {
                         console.log('error');
                         console.log(error.error.message);
+
+                        this.updateLoginFailedState(error.error)
                     },
                     () =>{
                         //comletion handler
@@ -67,6 +69,9 @@ export class LogInComponent implements OnInit {
 
     updateLoginState(payload : any){
         this.store.dispatch( new LActions.LoginSuccess(payload));
+    }
+    updateLoginFailedState(payload : any){
+        this.store.dispatch( new LActions.LoginFailed(payload));
     }
 
 

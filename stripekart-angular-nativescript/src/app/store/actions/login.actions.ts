@@ -13,6 +13,14 @@ export interface LoginSuccessResponse {
     refresh_token : string;
 
 }
+export interface LoginFailedResponse {
+
+    error : string;
+    error_description : string;
+    message : string;
+
+
+}
 
 export class LoginSuccess implements Action {
     readonly type = LOGIN_SUCCESS;
@@ -21,6 +29,8 @@ export class LoginSuccess implements Action {
 }
 export class LoginFailed implements Action {
     readonly type = LOGIN_FAILED;
+
+    constructor(public payload : LoginFailedResponse){}
 
 
 }
