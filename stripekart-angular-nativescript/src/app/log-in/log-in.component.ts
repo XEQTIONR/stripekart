@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { environment } from '../../environments/environment'
-// import { LoginService } from '../login.service';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { LoginState } from '../store/models/login-state';
@@ -47,7 +46,7 @@ export class LogInComponent implements OnInit {
     this.http.post(this.loginApiUrl, this.loginForm.value)
                 // .map( data => this.updateLoginState(data))
                 .subscribe(
-                    (res) => {
+                    (res : LActions.LoginSuccessResponse) => {
                     console.log("RES IS :");
                     console.log(res);
                     //console.log("RES BODY", res.access_token)
@@ -67,10 +66,10 @@ export class LogInComponent implements OnInit {
                     });
     }
 
-    updateLoginState(payload : any){
+    updateLoginState(payload : LActions.LoginSuccessResponse){
         this.store.dispatch( new LActions.LoginSuccess(payload));
     }
-    updateLoginFailedState(payload : any){
+    updateLoginFailedState(payload : LActions.LoginFailedResponse){
         this.store.dispatch( new LActions.LoginFailed(payload));
     }
 
