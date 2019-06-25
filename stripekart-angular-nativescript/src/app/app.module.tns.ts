@@ -9,6 +9,9 @@ import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { LogInComponent } from './log-in/log-in.component';
 
+
+import { AuthenticationModule } from './authentication/authentication.module.tns';
+
 const firebase = require("nativescript-plugin-firebase");
 
 firebase
@@ -41,6 +44,7 @@ firebase.addOnDynamicLinkReceivedCallback(
   imports: [
     NativeScriptModule,
     AppRoutingModule,
+    AuthenticationModule
   ],
   providers: [],
   bootstrap: [AppComponent],

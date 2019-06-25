@@ -15,8 +15,11 @@ import { loginReducer } from './store/reducers/login.reducer';
 
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+
+import { AuthenticationModule } from './authentication/authentication.module'
 @NgModule({
   declarations: [
+
     AppComponent,
     HomeComponent,
     ResetPasswordComponent,
@@ -28,7 +31,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     ReactiveFormsModule,
     HttpClientModule,
     StoreModule.forRoot({ loginState : loginReducer }),
-    StoreDevtoolsModule.instrument({})
+    StoreDevtoolsModule.instrument({}),
+    AuthenticationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
