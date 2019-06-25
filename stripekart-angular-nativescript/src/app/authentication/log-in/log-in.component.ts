@@ -22,7 +22,6 @@ interface AppState {
 export class LogInComponent implements OnInit {
 
     loginApiUrl : string;
-    response : any;
     loginForm =  new FormGroup({
         username : new FormControl(''),
         password : new FormControl('')
@@ -49,7 +48,7 @@ export class LogInComponent implements OnInit {
                     (res : LoginActions.LoginSuccessResponse) => {
                     console.log("RES IS :");
                     console.log(res);
-                    //console.log("RES BODY", res.access_token)
+
                     this.updateLoginState(res);
         ''            },
                     error => {
