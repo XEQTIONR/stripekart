@@ -1,3 +1,14 @@
-<p>
-  log-in works!
-</p>
+<div class="container">
+    <form [formGroup]="loginForm" (ngSubmit)="attemptLogin()">
+        <!-- <div class="form-group"> -->
+            <input id="email" type="email" formControlName='username'>
+        <!-- </div> -->
+        <!-- <div class="form-group"> -->
+            <input id="password" type="password" formControlName='password' >
+        <!-- </div> -->
+            <p>{{ loginForm.controls['username'].value }}</p> <br>
+            <p>{{ loginApiUrl }}</p>
+            <button type="submit">Update Name</button>
+        <!-- <button type="submit">LogIn</button> -->
+    </form>
+</div>
