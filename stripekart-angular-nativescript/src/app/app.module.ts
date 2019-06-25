@@ -7,11 +7,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { LogInComponent } from './log-in/log-in.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { StoreModule } from '@ngrx/store';
-import { loginReducer } from './store/reducers/login.reducer';
 
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
@@ -23,14 +21,13 @@ import { AuthenticationModule } from './authentication/authentication.module'
     AppComponent,
     HomeComponent,
     ResetPasswordComponent,
-    LogInComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    StoreModule.forRoot({ loginState : loginReducer }),
+    //StoreModule.forRoot({ loginState : loginReducer }),
     StoreDevtoolsModule.instrument({}),
     AuthenticationModule
   ],

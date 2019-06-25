@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { LoginState } from '../../store/models/login-state';
-import * as LActions from  '../../store/actions/login.actions';
+import * as LoginActions from  '../../store/actions/login.actions';
 
 
 
@@ -46,7 +46,7 @@ export class LogInComponent implements OnInit {
     this.http.post(this.loginApiUrl, this.loginForm.value)
                 // .map( data => this.updateLoginState(data))
                 .subscribe(
-                    (res : LActions.LoginSuccessResponse) => {
+                    (res : LoginActions.LoginSuccessResponse) => {
                     console.log("RES IS :");
                     console.log(res);
                     //console.log("RES BODY", res.access_token)
@@ -66,11 +66,11 @@ export class LogInComponent implements OnInit {
                     });
     }
 
-    updateLoginState(payload : LActions.LoginSuccessResponse){
-        this.store.dispatch( new LActions.LoginSuccess(payload));
+    updateLoginState(payload : LoginActions.LoginSuccessResponse){
+        this.store.dispatch( new LoginActions.LoginSuccess(payload));
     }
-    updateLoginFailedState(payload : LActions.LoginFailedResponse){
-        this.store.dispatch( new LActions.LoginFailed(payload));
+    updateLoginFailedState(payload : LoginActions.LoginFailedResponse){
+        this.store.dispatch( new LoginActions.LoginFailed(payload));
     }
 
 
