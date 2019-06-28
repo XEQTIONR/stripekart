@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 
 export const LOGIN_SUCCESS = '[Login] Successful Login';
 export const LOGIN_FAILED = '[Login] Failed Login';
+export const LOGIN_USER = '[Login] Save Login User';
 
 export interface LoginSuccessResponse {
 
@@ -22,19 +23,31 @@ export interface LoginFailedResponse {
 
 }
 
+export interface LoginUserResponse {
+
+    id : number;
+    email : string;
+    name : string;
+}
+
 export class LoginSuccess implements Action {
     readonly type = LOGIN_SUCCESS;
 
     constructor(public payload : LoginSuccessResponse){}
 }
+
 export class LoginFailed implements Action {
     readonly type = LOGIN_FAILED;
 
     constructor(public payload : LoginFailedResponse){}
+}
 
+export class LoginUser implements Action {
+    readonly type = LOGIN_USER;
 
+    constructor(public payload){}
 }
 
 
 
-export type All = LoginSuccess | LoginFailed;
+export type All = LoginSuccess | LoginFailed | LoginUser;

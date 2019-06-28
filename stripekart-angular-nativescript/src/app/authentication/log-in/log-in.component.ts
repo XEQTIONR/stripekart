@@ -41,6 +41,7 @@ export class LogInComponent implements OnInit {
 
                     },
                     () =>{
+                        console.log("Login Component Completion Handler");
                         //comletion handler
                         // not triggered on error
                     }
