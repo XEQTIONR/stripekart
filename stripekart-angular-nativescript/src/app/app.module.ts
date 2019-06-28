@@ -9,20 +9,17 @@ import { HomeComponent } from './home/home.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { HttpClientModule } from '@angular/common/http';
 
-import { StoreModule } from '@ngrx/store';
+//import { StoreModule } from '@ngrx/store';
 
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 
 import { AuthenticationModule } from './authentication/authentication.module'
 
-window.addEventListener('storage', (event) => {
 
-    console.log('STORAGE EVENT DETECTED',);
-    console.log(event.key, event.storageArea);
-    console.log("new val : ", event.newValue);
-    console.log("old val : ", event.oldValue);
-    console.log("--DONE--")
+import { UserService } from './user.service';
+
+window.addEventListener('storage', (event) => {
 
     if (typeof(Storage) !== "undefined")
         switch(event.key)
@@ -47,11 +44,10 @@ window.addEventListener('storage', (event) => {
 
 window.onload = () =>{
 
-    console.log('window onload called', localStorage.getItem('refresh_token'));
     if (typeof(Storage) !== "undefined")
         if(localStorage.getItem('refresh_token')!=null && sessionStorage.getItem('access_token') == null )
         {
-            localStorage.setItem('auth_request', 'requested');
+            localStorage.setItem('auth_request', 'requested'); // 'requested' can be any non null value
             localStorage.removeItem('auth_request');
         }
 
@@ -75,7 +71,7 @@ window.onload = () =>{
     StoreDevtoolsModule.instrument({}),
     AuthenticationModule
   ],
-  providers: [],
+  providers: [ UserService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
