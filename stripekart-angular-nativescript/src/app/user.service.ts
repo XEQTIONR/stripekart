@@ -32,6 +32,7 @@ export class UserService {
 
     constructor(private http : HttpClient, private store : Store<AppState>) {
 
+
         window.addEventListener('storage', (event) => {
 
             if (typeof(Storage) !== "undefined")
@@ -39,7 +40,15 @@ export class UserService {
                 {
                     case 'access_token' :
                         if(event.newValue != null)
+                        {
+                            console.log('access_token request caught');
                             sessionStorage.setItem('access_token', event.newValue);
+                            let access_token = event.newValue;
+                            let refresh_token = localStorage.getItem('refresh_token');
+
+                            this.updateLoginState({'access_token' : access_token, 'refresh_token' : refresh_token});
+                        }
+
                         break;
 
                     case 'auth_request' :
@@ -57,16 +66,7 @@ export class UserService {
 
         });
 
-        window.onload = () =>{
-            console.log('window onload callled');
-            if (typeof(Storage) !== "undefined")
-                if(localStorage.getItem('refresh_token')!=null && sessionStorage.getItem('access_token') == null )
-                {
-                    localStorage.setItem('auth_request', 'requested'); // 'requested' can be any non null value
-                    localStorage.removeItem('auth_request');
-                }
 
-        }
 
 
         this.loginState$ = store.select('loginState');
@@ -99,15 +99,22 @@ export class UserService {
 
     public updateLoginState(payload : LoginActions.LoginSuccessResponse){
         this.store.dispatch( new LoginActions.LoginSuccess(payload));
+        this.access_token = payload.access_token;
+        this.refresh_token = payload.refresh_token;
 
         if (typeof(Storage) !== "undefined")
         {
 
+            if(sessionStorage.getItem('access_token')!= payload.access_token
+            && localStorage.getItem('refresh_token')!= payload.refresh_token
+            )
+            {
             sessionStorage.setItem('access_token', payload.access_token);
             localStorage.setItem('refresh_token', payload.refresh_token);
 
             localStorage.setItem('access_token', payload.access_token);
             localStorage.removeItem('access_token');
+            }
         }
 
         var headers = new HttpHeaders({
@@ -125,6 +132,9 @@ export class UserService {
                 (res : LoginActions.LoginUserResponse )  => {
                     //console.log("THE USER", res);
                     this.store.dispatch( new LoginActions.LoginUser(res));
+                    this.id = res.id;
+                    this.name = res.name;
+                    this.email = res.email;
                 },
                 (error) => {
                     console.log('error', 'on User API call');

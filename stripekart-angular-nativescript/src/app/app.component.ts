@@ -5,33 +5,18 @@ import { UserService } from './user.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
     constructor(private userService : UserService){}
+
     ngOnInit(){
-
-        console.log("APP COMPONENT INITTED");
-
-        if(sessionStorage.getItem('access_token') == null)
-        {
-            console.log("access TOKEN IS NULL");
-            if(this.userService.getRefreshToken() ==  null)
-            {
-                var token = localStorage.getItem('refresh_token');
-                if(token != null)
+        console.log('ng on init');
+        if (typeof(Storage) !== "undefined")
+                if(localStorage.getItem('refresh_token')!=null && sessionStorage.getItem('access_token') == null )
                 {
-                    this.userService.setRefreshToken(token);
-                    this.userService.refreshTokens();
+                    console.log("Sending auth request");
+                    localStorage.setItem('auth_request', 'requested'); // 'requested' can be any non null value
+                    localStorage.removeItem('auth_request');
                 }
-                else
-                {
-                    console.log("NO REFRESH TOKEN IN localstorage")
-                }
-
-            }
-        }
-        else
-            console.log('Found AcCeSS ToKen In SeSSioN Storage')
-
     }
 }
