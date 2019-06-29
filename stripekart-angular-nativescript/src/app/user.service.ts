@@ -31,6 +31,44 @@ export class UserService {
     public loginState$ : Observable<LoginState>;
 
     constructor(private http : HttpClient, private store : Store<AppState>) {
+
+        window.addEventListener('storage', (event) => {
+
+            if (typeof(Storage) !== "undefined")
+                switch(event.key)
+                {
+                    case 'access_token' :
+                        if(event.newValue != null)
+                            sessionStorage.setItem('access_token', event.newValue);
+                        break;
+
+                    case 'auth_request' :
+                        console.log('auth request caught');
+                        if(event.newValue != null)
+                            if(sessionStorage.getItem('access_token') != null)
+                            {
+                                localStorage.setItem('access_token', sessionStorage.getItem('access_token'));
+                                localStorage.removeItem('access_token');
+
+                            }
+
+
+                }
+
+        });
+
+        window.onload = () =>{
+            console.log('window onload callled');
+            if (typeof(Storage) !== "undefined")
+                if(localStorage.getItem('refresh_token')!=null && sessionStorage.getItem('access_token') == null )
+                {
+                    localStorage.setItem('auth_request', 'requested'); // 'requested' can be any non null value
+                    localStorage.removeItem('auth_request');
+                }
+
+        }
+
+
         this.loginState$ = store.select('loginState');
 
         this.loginState$.subscribe(
