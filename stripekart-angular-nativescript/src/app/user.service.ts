@@ -32,6 +32,19 @@ export class UserService {
 
     constructor(private http : HttpClient, private store : Store<AppState>) {
 
+        window.onbeforeunload  = function(){
+
+            //localStorage.setItem("UNLOADED", 'butch');
+            let count = parseInt(localStorage.getItem('tab_count'));
+            if(count>0)
+            {
+                count--;
+                localStorage.setItem('tab_count', ''+count);
+
+            }
+            else if(count == 0)
+                localStorage.removeItem('tab_count');
+        }
 
         window.addEventListener('storage', (event) => {
 
@@ -58,6 +71,8 @@ export class UserService {
                             {
                                 localStorage.setItem('access_token', sessionStorage.getItem('access_token'));
                                 localStorage.removeItem('access_token');
+
+                                localStorage.removeItem('auth_request');
 
                             }
 
@@ -98,58 +113,67 @@ export class UserService {
     }
 
     public updateLoginState(payload : LoginActions.LoginSuccessResponse){
-        this.store.dispatch( new LoginActions.LoginSuccess(payload));
-        this.access_token = payload.access_token;
-        this.refresh_token = payload.refresh_token;
 
-        if (typeof(Storage) !== "undefined")
+        if(this.access_token != payload.access_token && this.refresh_token != payload.refresh_token)
         {
+            this.store.dispatch( new LoginActions.LoginSuccess(payload));
+            this.access_token = payload.access_token;
+            this.refresh_token = payload.refresh_token;
 
-            if(sessionStorage.getItem('access_token')!= payload.access_token
-            && localStorage.getItem('refresh_token')!= payload.refresh_token
-            )
+            if (typeof(Storage) !== "undefined")
             {
-            sessionStorage.setItem('access_token', payload.access_token);
-            localStorage.setItem('refresh_token', payload.refresh_token);
 
-            localStorage.setItem('access_token', payload.access_token);
-            localStorage.removeItem('access_token');
-            }
-        }
+                if(sessionStorage.getItem('access_token')!= payload.access_token
+                && localStorage.getItem('refresh_token')!= payload.refresh_token
+                )
+                {
+                sessionStorage.setItem('access_token', payload.access_token);
+                localStorage.setItem('refresh_token', payload.refresh_token);
 
-        var headers = new HttpHeaders({
-            'Accept':  'application/json',
-            'Authorization': 'Bearer '+payload.access_token
-        });
-
-        var options = {
-            headers : headers
-        }
-
-
-        this.http.get(this.userApiUrl, options)
-            .subscribe(
-                (res : LoginActions.LoginUserResponse )  => {
-                    //console.log("THE USER", res);
-                    this.store.dispatch( new LoginActions.LoginUser(res));
-                    this.id = res.id;
-                    this.name = res.name;
-                    this.email = res.email;
-                },
-                (error) => {
-                    console.log('error', 'on User API call');
-                    console.log(error);
-
-                    this.updateLoginFailedState(error.error); // error.error is a LoginActions.LoginFailedResponse
-                },
-                () =>{
-                    console.log('USER API DONE');
-
+                localStorage.setItem('access_token', payload.access_token);
+                localStorage.removeItem('access_token');
                 }
-            );
-                // }
-            // );
+            }
 
+            var headers = new HttpHeaders({
+                'Accept':  'application/json',
+                'Authorization': 'Bearer '+payload.access_token
+            });
+
+            var options = {
+                headers : headers
+            }
+
+
+            this.http.get(this.userApiUrl, options)
+                .subscribe(
+                    (res : LoginActions.LoginUserResponse )  => {
+                        //console.log("THE USER", res);
+                        this.store.dispatch( new LoginActions.LoginUser(res));
+                        this.id = res.id;
+                        this.name = res.name;
+                        this.email = res.email;
+                    },
+                    (error) => {
+                        console.log('error', 'on User API call');
+                        console.log(error);
+
+                        this.updateLoginFailedState(error.error); // error.error is a LoginActions.LoginFailedResponse
+                    },
+                    () =>{
+                        console.log('USER API DONE');
+
+                        let count  = parseInt(localStorage.getItem('tab_count'));
+
+                        if(isNaN(count))
+                            count =0;
+                        localStorage.setItem('tab_count', (count+1)+"");
+
+                    }
+                );
+                    // }
+                // );
+        }
 
     }
 
