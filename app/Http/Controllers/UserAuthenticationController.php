@@ -94,6 +94,22 @@ class UserAuthenticationController extends Controller
 
     }
 
+    public function refreshTokens(Request $request)
+    {
+        $req = Request::create(route('passport.token'), 'POST', [
+
+            'grant_type' => 'refresh_token',
+            'client_id' => config('auth.oauth_credentials.password_grant_client.id'),
+            'client_secret' => config('auth.oauth_credentials.password_grant_client.secret'),
+            'refresh_token' => $request->refresh_token,
+            'scope' => ''
+          ]);
+
+          $response = app()->handle($req);
+
+          return $response;
+    }
+
     public function logout()
     {
       auth()->user()->tokens->each(function($token, $key){

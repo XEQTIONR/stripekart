@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/login', 'UserAuthenticationController@login')->name('user.login');
+Route::post('/login/refresh', 'UserAuthenticationController@refreshTokens')->name('user.refresh');
 //Route::post('/register', 'UserAuthenticationController@register')->name('user.logout');
 Route::post('/register', 'UserAuthenticationController@register')->name('user.register');
 Route::post('/password/email', 'UserForgotPasswordController@sendResetLinkEmail');
