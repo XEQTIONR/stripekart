@@ -5,8 +5,6 @@ import { Store } from '@ngrx/store';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs';
-
-
 interface AppState {
     login_state : LoginState;
 }
@@ -23,11 +21,36 @@ export class UserService {
 
     private loginApiUrl : string = environment.apiUrl + 'login';
     private userApiUrl : string = environment.apiUrl + 'user';
+    private refreshApiUrl : string = environment.apiUrl + 'login/refresh';
+    public id : number;
+    public name : string;
+    public email : string;
+    public access_token : string;
+    private refresh_token : string;
 
-    loginState$ : Observable<LoginState>;
+    public loginState$ : Observable<LoginState>;
 
     constructor(private http : HttpClient, private store : Store<AppState>) {
         this.loginState$ = store.select('loginState');
+
+        this.loginState$.subscribe(
+            (res : LoginState) => {
+                console.log("USER INFO2");
+                console.log(res);
+
+                if(res != null && res.email != null) // first mutation only access tokens set
+                {
+                    this.email = res.email;
+                    this.id = res.id;
+                    this.name = res.name;
+                    this.access_token = res.access_token;
+                    this.refresh_token = res.refresh_token;
+
+                }
+                else
+                console.log("NOT SETTING");
+            }
+        )
     }
 
     public login( loginCredentials : Credentials)
@@ -73,6 +96,7 @@ export class UserService {
                 },
                 () =>{
                     console.log('USER API DONE');
+
                 }
             );
                 // }
@@ -84,5 +108,34 @@ export class UserService {
     public updateLoginFailedState(payload : LoginActions.LoginFailedResponse){
         this.store.dispatch( new LoginActions.LoginFailed(payload));
     }
+
+    public refreshTokens(){
+        console.log('refresh tokens called');
+        this.http.post(this.refreshApiUrl, { refresh_token : this.refresh_token})
+            .subscribe(
+                (res : LoginActions.LoginSuccessResponse) =>{
+                    console.log("RESPONSE after REFRSHING tokens :", res);
+                    this.updateLoginState(res);
+
+                },
+                (error) =>{
+                    console.log("ERROR ED out", error);
+                },
+                () =>{
+
+                }
+            )
+    }
+
+    public getRefreshToken(){
+        return this.refresh_token;
+    }
+
+    public setRefreshToken(refresh_token : string){
+        this.refresh_token = refresh_token;
+        //this.refreshTokens();
+    }
+
+
 
 }

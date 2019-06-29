@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store';
 export const LOGIN_SUCCESS = '[Login] Successful Login';
 export const LOGIN_FAILED = '[Login] Failed Login';
 export const LOGIN_USER = '[Login] Save Login User';
+export const LOGIN_REFRESH = '[Login] Login from refresh token'
 
 export interface LoginSuccessResponse {
 
@@ -44,6 +45,12 @@ export class LoginFailed implements Action {
 
 export class LoginUser implements Action {
     readonly type = LOGIN_USER;
+
+    constructor(public payload){}
+}
+
+export class LoginUsingRefresh implements Action {
+    readonly type = LOGIN_REFRESH;
 
     constructor(public payload){}
 }
