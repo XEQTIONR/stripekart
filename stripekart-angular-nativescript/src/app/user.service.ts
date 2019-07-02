@@ -34,7 +34,6 @@ export class UserService {
 
         window.onbeforeunload  = function(){
 
-            //localStorage.setItem("UNLOADED", 'butch');
             let count = parseInt(localStorage.getItem('tab_count'));
             if(count>0)
             {
