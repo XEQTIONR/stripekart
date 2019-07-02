@@ -121,7 +121,7 @@ export class UserService {
         var options = {
             headers : headers
         }
-
+        //Call to logout API. Need to subscribe. Need to updateLogoutState manually on completion handler.
         return this.http.post(this.logoutApiUrl, options);
     }
 
@@ -192,6 +192,29 @@ export class UserService {
 
     public updateLoginFailedState(payload : LoginActions.LoginFailedResponse){
         this.store.dispatch( new LoginActions.LoginFailed(payload));
+    }
+
+    public updateLogoutState(){
+
+        //Clear Storage/Cache
+        if (typeof(Storage) !== "undefined")
+        {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            sessionStorage.removeItem('access_token');
+            sessionStorage.removeItem('refresh_token');
+        }
+
+        // Reset user service values
+        this.id = null;
+        this.name = null;
+        this.email = null;
+        this.access_token = null;
+        this.refresh_token = null;
+
+
+        //Update NGRX state
+        this.store.dispatch( new LoginActions.Logout());
     }
 
     public refreshTokens(){
