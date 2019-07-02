@@ -25,5 +25,8 @@ export function loginReducer(state : LoginState = initialState, action : Action)
 
         case LActions.LOGIN_USER :
             return Object.assign({}, state, { id : action.payload.id, email : action.payload.email, name : action.payload.name});
+
+        case LActions.LOGOUT :
+            return initialState;
      }
 }

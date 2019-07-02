@@ -20,6 +20,7 @@ interface Credentials {
 export class UserService {
 
     private loginApiUrl : string = environment.apiUrl + 'login';
+    private logoutApiUrl : string = environment.apiUrl + 'logout';
     private userApiUrl : string = environment.apiUrl + 'user';
     private refreshApiUrl : string = environment.apiUrl + 'login/refresh';
     public id : number;
@@ -109,6 +110,19 @@ export class UserService {
     {
      // returning an observable
         return this.http.post(this.loginApiUrl, loginCredentials);
+    }
+
+    public logout()
+    {
+        var headers = new HttpHeaders({
+            'Accept':  'application/json',
+            'Authorization': 'Bearer '+this.access_token
+        });
+        var options = {
+            headers : headers
+        }
+
+        return this.http.post(this.logoutApiUrl, options);
     }
 
     public updateLoginState(payload : LoginActions.LoginSuccessResponse){

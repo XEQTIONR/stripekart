@@ -1,9 +1,10 @@
 import { Action } from '@ngrx/store';
 
-export const LOGIN_SUCCESS = '[Login] Successful Login';
-export const LOGIN_FAILED = '[Login] Failed Login';
-export const LOGIN_USER = '[Login] Save Login User';
-export const LOGIN_REFRESH = '[Login] Login from refresh token'
+export const LOGIN_SUCCESS = '[Authentication] Successful Login';
+export const LOGIN_FAILED = '[Authentication] Failed Login';
+export const LOGIN_USER = '[Authentication] Save Login User';
+export const LOGIN_REFRESH = '[Authentication] Login from refresh token';
+export const LOGOUT =  '[Authentication] Log out';
 
 export interface LoginSuccessResponse {
 
@@ -53,8 +54,13 @@ export class LoginUsingRefresh implements Action {
     readonly type = LOGIN_REFRESH;
 
     constructor(public payload){}
+
+}
+
+export class Logout implements Action {
+    readonly type = LOGOUT;
 }
 
 
 
-export type All = LoginSuccess | LoginFailed | LoginUser;
+export type All = LoginSuccess | LoginFailed | LoginUser | Logout;

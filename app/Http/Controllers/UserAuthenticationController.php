@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use GuzzleHttp\Client;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\DB;
 
 class UserAuthenticationController extends Controller
 {
@@ -112,9 +113,13 @@ class UserAuthenticationController extends Controller
 
     public function logout()
     {
-      auth()->user()->tokens->each(function($token, $key){
-        $token->delete();
-      });
+      $accessToken = auth()->user()->token();
+
+      DB::table('oauth_refresh_tokens')
+        ->where('access_token_id', $accessToken->id)
+        ->delete();
+
+      $accessToken->delete();
     }
 
 }
