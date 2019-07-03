@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
+
 import { HttpClientModule } from '@angular/common/http';
 
 //import { StoreModule } from '@ngrx/store';
@@ -28,7 +28,7 @@ import { UserService } from './user.service';
 
     AppComponent,
     HomeComponent,
-    ResetPasswordComponent,
+
   ],
   imports: [
     BrowserModule,

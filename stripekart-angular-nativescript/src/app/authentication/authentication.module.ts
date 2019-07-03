@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { AuthenticationComponent} from  './authentication.component'
 import { LogInComponent } from './log-in/log-in.component';
-
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { StoreModule } from '@ngrx/store';
@@ -16,7 +16,8 @@ import { loginReducer } from '../store/reducers/login.reducer';
 @NgModule({
   declarations: [
       LogInComponent,
-      AuthenticationComponent
+      AuthenticationComponent,
+      ResetPasswordComponent,
 
     ],
   imports: [
