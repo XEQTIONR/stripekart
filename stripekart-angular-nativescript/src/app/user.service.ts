@@ -9,9 +9,20 @@ interface AppState {
     login_state : LoginState;
 }
 
-interface Credentials {
+interface LoginCredentials {
     username : string;
     password : string;
+}
+
+interface ResetEmailCredentials {
+    username : string;
+}
+
+interface ResetCredentials {
+    token : string;
+    username : string;
+    password : string;
+    password_confirmation : string;
 }
 
 @Injectable({
@@ -23,6 +34,8 @@ export class UserService {
     private logoutApiUrl : string = environment.apiUrl + 'logout';
     private userApiUrl : string = environment.apiUrl + 'user';
     private refreshApiUrl : string = environment.apiUrl + 'login/refresh';
+    private resetApiUrl : string = environment.apiUrl + 'password/reset';
+    private resetEmailApiUrl : string = environment.apiUrl + 'password/email';
     public id : number;
     public name : string;
     public email : string;
@@ -106,7 +119,7 @@ export class UserService {
         )
     }
 
-    public login( loginCredentials : Credentials)
+    public login( loginCredentials : LoginCredentials)
     {
      // returning an observable
         return this.http.post(this.loginApiUrl, loginCredentials);
@@ -123,6 +136,16 @@ export class UserService {
         }
         //Call to logout API. Need to subscribe. Need to updateLogoutState manually on completion handler.
         return this.http.post(this.logoutApiUrl, options);
+    }
+
+    public resetPassword(resetCredentials : ResetCredentials)
+    {
+        return this.http.post(this.resetApiUrl, resetCredentials);
+    }
+
+    public sendResetEmail(emailCredentials : ResetEmailCredentials)
+    {
+        return this.http.post(this.resetEmailApiUrl, emailCredentials);
     }
 
     public updateLoginState(payload : LoginActions.LoginSuccessResponse){

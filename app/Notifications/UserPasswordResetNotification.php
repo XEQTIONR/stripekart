@@ -54,6 +54,7 @@ class UserPasswordResetNotification extends Notification
         ->action(Lang::getFromJson('Reset Password'), url(config('app.url').route('password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)))
         ->line(Lang::getFromJson('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.users.expire')]))
         ->line(Lang::getFromJson('If you did not request a password reset, no further action is required.'));
+        // Using angular /password/reset route not laravel /password/reset route
 
     }
 

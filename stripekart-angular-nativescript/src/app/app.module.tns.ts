@@ -6,8 +6,6 @@ import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { LogInComponent } from './log-in/log-in.component';
 
 
 import { AuthenticationModule } from './authentication/authentication.module.tns';
@@ -38,8 +36,6 @@ firebase.addOnDynamicLinkReceivedCallback(
   declarations: [
     AppComponent,
     HomeComponent,
-    ResetPasswordComponent,
-    LogInComponent,
   ],
   imports: [
     NativeScriptModule,

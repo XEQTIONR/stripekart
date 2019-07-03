@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { StoreModule } from '@ngrx/store';
 import { loginReducer } from '../store/reducers/login.reducer';
+import { ResetEmailComponent } from './reset-email/reset-email.component';
 
 //import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
@@ -18,6 +19,7 @@ import { loginReducer } from '../store/reducers/login.reducer';
       LogInComponent,
       AuthenticationComponent,
       ResetPasswordComponent,
+      ResetEmailComponent,
 
     ],
   imports: [
